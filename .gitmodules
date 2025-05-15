@@ -1,0 +1,3 @@
+[submodule "tesseract-decoder"]
+	path = tesseract-decoder
+	url = https://github.com/quantumlib/tesseract-decoder.git
