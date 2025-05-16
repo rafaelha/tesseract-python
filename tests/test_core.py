@@ -6,7 +6,14 @@ import shutil
 
 import stim
 
-from src.tesseract_decoder.core import (
+import sys
+from pathlib import Path
+
+# Add src directory to Python path
+src_path = str(Path(__file__).parent.parent / "src")
+sys.path.append(src_path)
+
+from tesseract_decoder.core import (
     TESSERACT_PATH,
     decode_from_circuit_file,
     decode_from_detection_events,
