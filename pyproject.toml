@@ -26,5 +26,8 @@ dependencies = [
 "Homepage" = "https://github.com/seokhyung-lee/tesseract-python"
 "Bug Tracker" = "https://github.com/seokhyung-lee/tesseract-python/issues"
 
+[tool.setuptools]
+include-package-data = true
+
 [tool.setuptools.packages.find]
 where = ["src"]
