@@ -21,25 +21,18 @@ This option is recommended if you want to ensure the bundled C++ Tesseract decod
     ```bash
     cd src/tesseract_decoder/tesseract-decoder
     bazel build src:all
+    mkdir -p ../_prebuilt_executable
+    cp bazel-bin/src/tesseract ../_prebuilt_executable/
     cd ../../.. 
     ```
-    This will create the `tesseract` executable in `src/tesseract_decoder/tesseract-decoder/bazel-bin/src/`.
 
-3.  **Copy the executable for packaging:**
-    The `bazel-bin` directory is often a symbolic link, which can cause issues with `pip` packaging. To ensure the executable is correctly included:
-    ```bash
-    mkdir -p src/tesseract_decoder/_prebuilt_executable
-    cp src/tesseract_decoder/tesseract-decoder/bazel-bin/src/tesseract src/tesseract_decoder/_prebuilt_executable/
-    ```
-    The Python wrapper is configured to find it in this `_prebuilt_executable` directory first.
-
-4.  **Run tests (Optional):**
+3.  **Run tests (Optional):**
     You can run the Python wrapper's test suite to ensure the core function is working correctly. (It doesn't include tests for advanced features.) Make sure you have `pytest` installed (`pip install pytest`).
     ```bash
     pytest tests
     ```
 
-5.  **Install the Python wrapper:**
+4.  **Install the Python wrapper:**
     ```bash
     pip install .
     ```
