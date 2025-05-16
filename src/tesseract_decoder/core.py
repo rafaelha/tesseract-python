@@ -19,6 +19,16 @@ def _find_tesseract_executable() -> str:
     """
     current_dir = os.path.dirname(__file__)
 
+    # 1. Check for prebuilt executable copied into the package
+    path_prebuilt = os.path.join(
+        current_dir,
+        "_prebuilt_executable",
+        "tesseract",
+    )
+    if os.path.exists(path_prebuilt) and os.access(path_prebuilt, os.X_OK):
+        return os.path.abspath(path_prebuilt)
+
+    # 2. Check original submodule path
     path_in_submodule = os.path.join(
         current_dir,
         "tesseract-decoder",
@@ -29,7 +39,7 @@ def _find_tesseract_executable() -> str:
     if os.path.exists(path_in_submodule) and os.access(path_in_submodule, os.X_OK):
         return os.path.abspath(path_in_submodule)
 
-    # Check if the executable is in the system PATH
+    # 3. Check if the executable is in the system PATH
     import shutil
 
     path_in_system = shutil.which("tesseract")
@@ -37,9 +47,11 @@ def _find_tesseract_executable() -> str:
         return path_in_system
 
     raise FileNotFoundError(
-        f"Tesseract executable not found. "
-        f"Please ensure it is built and in your PATH, or the path is correctly specified. "
-        f"Checked: '{path_in_submodule}' and system PATH."
+        "Tesseract executable not found. "
+        "Please ensure it is built and in your PATH, or copied to the "
+        "'_prebuilt_executable' directory within the 'src/tesseract_decoder' directory "
+        "before installation, as per README instructions. "
+        f"Checked locations: '{path_prebuilt}', '{path_in_submodule}', and system PATH."
     )
 
 

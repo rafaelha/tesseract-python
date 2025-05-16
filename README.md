@@ -23,15 +23,23 @@ This option is recommended if you want to ensure the bundled C++ Tesseract decod
     bazel build src:all
     cd ../../.. 
     ```
-    This will create the `tesseract` executable in `src/tesseract_decoder/tesseract-decoder/bazel-bin/src/`. The Python wrapper is configured to find it there.
+    This will create the `tesseract` executable in `src/tesseract_decoder/tesseract-decoder/bazel-bin/src/`.
 
-3.  **Run tests (Optional):**
+3.  **Copy the executable for packaging:**
+    The `bazel-bin` directory is often a symbolic link, which can cause issues with `pip` packaging. To ensure the executable is correctly included:
+    ```bash
+    mkdir -p src/tesseract_decoder/_prebuilt_executable
+    cp src/tesseract_decoder/tesseract-decoder/bazel-bin/src/tesseract src/tesseract_decoder/_prebuilt_executable/
+    ```
+    The Python wrapper is configured to find it in this `_prebuilt_executable` directory first.
+
+4.  **Run tests (Optional):**
     You can run the Python wrapper's test suite to ensure the core function is working correctly. (It doesn't include tests for advanced features.) Make sure you have `pytest` installed (`pip install pytest`).
     ```bash
     pytest tests
     ```
 
-4.  **Install the Python wrapper:**
+5.  **Install the Python wrapper:**
     ```bash
     pip install .
     ```
@@ -45,7 +53,7 @@ This option is recommended if you want to ensure the bundled C++ Tesseract decod
 If you have already built or installed the Tesseract C++ decoder from its [original repository](https://github.com/quantumlib/tesseract-decoder) and added the `tesseract` executable to your system's `PATH`, you can install this Python wrapper without the submodule.
 
 1.  **Ensure `tesseract` is in your PATH:**
-    Verify that you can run `tesseract --version` from your terminal. If not, please refer to the [original Tesseract decoder documentation](https://github.com/quantumlib/tesseract-decoder?tab=readme-ov-file#installation) for build and installation instructions, and ensure the built executable is accessible in your `PATH`. Note that the tesseract executable is originally prepared at `tesseract-decoder/bazel-bin/src/tesseract` after compiling.
+    Verify that you can run `tesseract --version` from your terminal. If not, please refer to the [original Tesseract decoder documentation](https://github.com/quantumlib/tesseract-decoder?tab=readme-ov-file#installation) for build and installation instructions, and ensure the built executable is accessible in your `PATH`. Note that you can find the tesseract executable at `tesseract-decoder/bazel-bin/src/tesseract` after compiling.
 
 2.  **Install the Python wrapper:**
     ```bash
