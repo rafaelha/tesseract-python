@@ -21,18 +21,23 @@ This option is recommended if you want to ensure the bundled C++ Tesseract decod
     ```bash
     cd src/tesseract_decoder/tesseract-decoder
     bazel build src:all
-    mkdir -p ../_prebuilt_executable
-    cp bazel-bin/src/tesseract ../_prebuilt_executable/
+    ```
+
+3. **Copy the Tesseract executive:**
+    ```bash
+    mkdir ../_bin
+    cp bazel-bin/src/tesseract ../_bin/tesseract
+    chmod +x ../_bin/tesseract
     cd ../../.. 
     ```
 
-3.  **Run tests (Optional):**
+4.  **Run tests (Optional):**
     You can run the Python wrapper's test suite to ensure the core function is working correctly. (It doesn't include tests for advanced features.) Make sure you have `pytest` installed (`pip install pytest`).
     ```bash
     pytest tests
     ```
 
-4.  **Install the Python wrapper:**
+5.  **Install the Python wrapper:**
     ```bash
     pip install .
     ```

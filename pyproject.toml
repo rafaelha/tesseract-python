@@ -2,6 +2,11 @@
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+package-dir   = {"" = "src"}
+packages      = ["tesseract_decoder"]
+package-data  = { "tesseract_decoder" = ["_bin/tesseract"] }
+
 [project]
 name = "tesseract_decoder"
 version = "0.1.0"
@@ -19,15 +24,12 @@ classifiers = [
     "Topic :: System :: Hardware :: Quantum Computing",
 ]
 dependencies = [
-    "stim", "numpy"
+    "stim"
 ]
+
+[project.scripts]
+tesseract = "tesseract_decoder.runner:main"
 
 [project.urls]
 "Homepage" = "https://github.com/seokhyung-lee/tesseract-python"
 "Bug Tracker" = "https://github.com/seokhyung-lee/tesseract-python/issues"
-
-[tool.setuptools]
-include-package-data = true
-
-[tool.setuptools.packages.find]
-where = ["src"]
