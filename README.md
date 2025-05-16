@@ -1,6 +1,6 @@
 # Python Wrapper for Tesseract Decoder
 
-This package provides a Python wrapper for the Tesseract Decoder, a search-based decoder for quantum error correction.
+This package provides a Python wrapper for the [Tesseract Decoder, a search-based decoder for quantum error correction](https://github.com/quantumlib/tesseract-decoder).
 
 ## Installation
 
