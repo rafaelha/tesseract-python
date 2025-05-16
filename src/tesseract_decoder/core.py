@@ -1,48 +1,65 @@
 import os
+import shutil
 import subprocess
+from importlib import resources
 from typing import Any, Dict, List, Optional
 
 
 def _find_tesseract_executable() -> str:
     """
-    Finds the tesseract executable.
-
-    Returns
-    -------
-    str
-        The path to the tesseract executable.
+    Return the absolute path to the packaged ``tesseract`` binary,
+    falling back to the legacy submodule build directory or the
+    system PATH.
 
     Raises
     ------
     FileNotFoundError
-        If the tesseract executable cannot be found.
+        If the executable cannot be located.
     """
+    # ──────────────────────────────────────────────────────────────
+    # 1. packaged binary inside our wheel (src/tesseract_decoder/_bin/)
+    #    `resources.as_file` makes sure we get a real filesystem path,
+    #    even when the package is installed from a zip wheel.
+    # ──────────────────────────────────────────────────────────────
+    try:
+        traversable = resources.files("tesseract_decoder").joinpath("_bin", "tesseract")
+        with resources.as_file(traversable) as bin_path:  # Py ≥3.9
+            if os.name == "nt":  # Windows: .exe
+                exe = bin_path.with_suffix(".exe")
+                if exe.exists():
+                    bin_path = exe
+            if bin_path.exists() and os.access(bin_path, os.X_OK):
+                return str(bin_path)
+    except ModuleNotFoundError:
+        # package isn't importable (very early import); ignore
+        pass
+
+    # ──────────────────────────────────────────────────────────────
+    # 2. legacy location (source checkout with Bazel build artifacts)
+    # ──────────────────────────────────────────────────────────────
     current_dir = os.path.dirname(__file__)
-
-    # 1. Check original submodule path
-    path_in_submodule = os.path.join(
-        current_dir,
-        "tesseract-decoder",
-        "bazel-bin",
-        "src",
-        "tesseract",
+    legacy_path = os.path.join(
+        current_dir, "tesseract-decoder", "bazel-bin", "src", "tesseract"
     )
-    if os.path.exists(path_in_submodule) and os.access(path_in_submodule, os.X_OK):
-        return os.path.abspath(path_in_submodule)
+    if os.path.exists(legacy_path) and os.access(legacy_path, os.X_OK):
+        return os.path.abspath(legacy_path)
 
-    # 2. Check if the executable is in the system PATH
-    import shutil
+    # ──────────────────────────────────────────────────────────────
+    # 3. system PATH
+    # ──────────────────────────────────────────────────────────────
+    system_path = shutil.which("tesseract")
+    if system_path:
+        return system_path
 
-    path_in_system = shutil.which("tesseract")
-    if path_in_system:
-        return path_in_system
-
+    # ──────────────────────────────────────────────────────────────
+    # 4. nothing found → raise
+    # ──────────────────────────────────────────────────────────────
     raise FileNotFoundError(
-        "Tesseract executable not found. "
-        "Please ensure it is built and in your PATH, or copied to the "
-        "'_prebuilt_executable' directory within the 'src/tesseract_decoder' directory "
-        "before installation, as per README instructions. "
-        f"Checked locations: '{path_in_submodule}', and system PATH."
+        "Tesseract executable not found.\n"
+        f"Checked:\n"
+        f"  • packaged wheel resource: {traversable}\n"
+        f"  • legacy Bazel build dir : {legacy_path}\n"
+        f"  • system PATH entry      : 'tesseract'"
     )
 
 

@@ -27,9 +27,6 @@ dependencies = [
     "stim"
 ]
 
-[project.scripts]
-tesseract = "tesseract_decoder.runner:main"
-
 [project.urls]
 "Homepage" = "https://github.com/seokhyung-lee/tesseract-python"
 "Bug Tracker" = "https://github.com/seokhyung-lee/tesseract-python/issues"
