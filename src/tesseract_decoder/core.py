@@ -2,6 +2,7 @@ import os
 import subprocess
 from typing import Any, Dict, List, Optional
 
+
 def _find_tesseract_executable() -> str:
     """
     Finds the tesseract executable.
@@ -139,7 +140,6 @@ def decode_from_circuit_file(
     ...     "surface_code.stim",
     ...     sample_num_shots=1000,
     ...     out_file="predictions.01",
-    ...     out_format="01"
     ... )
     >>> print(f"Stdout: {results['stdout']}")
 
