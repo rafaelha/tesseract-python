@@ -45,7 +45,7 @@ This option is recommended if you want to ensure the bundled C++ Tesseract decod
 If you have already built or installed the Tesseract C++ decoder from its [original repository](https://github.com/quantumlib/tesseract-decoder) and added the `tesseract` executable to your system's `PATH`, you can install this Python wrapper without the submodule.
 
 1.  **Ensure `tesseract` is in your PATH:**
-    Verify that you can run `tesseract --version` from your terminal. If not, please refer to the [original Tesseract decoder documentation](https://github.com/quantumlib/tesseract-decoder?tab=readme-ov-file#installation) for build and installation instructions, and ensure the built executable is accessible in your `PATH`.
+    Verify that you can run `tesseract --version` from your terminal. If not, please refer to the [original Tesseract decoder documentation](https://github.com/quantumlib/tesseract-decoder?tab=readme-ov-file#installation) for build and installation instructions, and ensure the built executable is accessible in your `PATH`. Note that the tesseract executable is originally prepared at `tesseract-decoder/bazel-bin/src/tesseract` after compiling.
 
 2.  **Install the Python wrapper:**
     ```bash
@@ -59,7 +59,7 @@ If you have already built or installed the Tesseract C++ decoder from its [origi
 Currently only supports decoding from circuit or DEM files as the original command-line
 interface. I will add more flexible ways soon.
 
-See the [original Tesseract decoder documentation](https://github.com/quantumlib/tesseract-decoder?tab=readme-ov-file#installation) for details on the parameters of the following functions.
+See the docstrings or the [original Tesseract decoder documentation](https://github.com/quantumlib/tesseract-decoder?tab=readme-ov-file#installation) for details on the parameters of the following functions.
 
 **1. Decoding from a Stim circuit file:**
 
