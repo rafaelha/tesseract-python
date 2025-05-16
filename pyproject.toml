@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tesseract_decoder"
+version = "0.1.0"
+authors = [
+  { name="Seok-Hyung Lee", email="sh.lee1524@gmail.com" },
+]
+description = "A Python wrapper for the Tesseract decoder, a Search-Based Decoder for Quantum Error Correction."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering",
+    "Topic :: System :: Hardware :: Quantum Computing",
+]
+dependencies = [
+    "stim", "numpy"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/seokhyung-lee/tesseract-python"
+"Bug Tracker" = "https://github.com/seokhyung-lee/tesseract-python/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
