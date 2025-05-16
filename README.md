@@ -23,7 +23,7 @@ This option is recommended if you want to ensure the bundled C++ Tesseract decod
     bazel build src:all
     ```
 
-3. **Copy the Tesseract executive:**
+3. **Copy the Tesseract executable:**
     ```bash
     cp bazel-bin/src/tesseract ../_bin/tesseract
     chmod +x ../_bin/tesseract
