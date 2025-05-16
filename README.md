@@ -26,7 +26,7 @@ This option is recommended if you want to ensure the bundled C++ Tesseract decod
     This will create the `tesseract` executable in `src/tesseract_decoder/tesseract-decoder/bazel-bin/src/`. The Python wrapper is configured to find it there.
 
 3.  **Run tests (Optional):**
-    You can run the Python wrapper's test suite to ensure everything is working correctly. Make sure you have `pytest` installed (`pip install pytest`).
+    You can run the Python wrapper's test suite to ensure the core function is working correctly. (It doesn't include tests for advanced features.) Make sure you have `pytest` installed (`pip install pytest`).
     ```bash
     pytest tests
     ```
