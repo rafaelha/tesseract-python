@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 package-dir   = {"" = "src"}
-packages      = ["tesseract_decoder"]
-package-data  = { "tesseract_decoder" = ["_bin/*"] }
+packages      = ["tesseract-python"]
+package-data  = { "tesseract-python" = ["_bin/*"] }
 
 [project]
-name = "tesseract_decoder"
+name = "tesseract-python"
 version = "0.1.0"
 authors = [
   { name="Seok-Hyung Lee", email="sh.lee1524@gmail.com" },
