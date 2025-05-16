@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools]
 package-dir   = {"" = "src"}
 packages      = ["tesseract_decoder"]
-package-data  = { "tesseract_decoder" = ["_bin/tesseract"] }
+package-data  = { "tesseract_decoder" = ["_bin/*"] }
 
 [project]
 name = "tesseract_decoder"

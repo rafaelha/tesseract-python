@@ -25,7 +25,6 @@ This option is recommended if you want to ensure the bundled C++ Tesseract decod
 
 3. **Copy the Tesseract executive:**
     ```bash
-    mkdir ../_bin
     cp bazel-bin/src/tesseract ../_bin/tesseract
     chmod +x ../_bin/tesseract
     cd ../../.. 
