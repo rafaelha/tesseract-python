@@ -22,6 +22,7 @@ def _find_tesseract_executable() -> str:
     #    `resources.as_file` makes sure we get a real filesystem path,
     #    even when the package is installed from a zip wheel.
     # ──────────────────────────────────────────────────────────────
+    traversable = None
     try:
         traversable = resources.files("tesseract_decoder").joinpath("_bin", "tesseract")
         with resources.as_file(traversable) as bin_path:  # Py ≥3.9
@@ -58,7 +59,7 @@ def _find_tesseract_executable() -> str:
     raise FileNotFoundError(
         "Tesseract executable not found.\n"
         f"Checked:\n"
-        f"  • packaged wheel resource: {traversable}\n"
+        f"  • packaged wheel resource: {traversable if traversable is not None else 'N/A'}\n"
         f"  • legacy Bazel build dir : {legacy_path}\n"
         f"  • system PATH entry      : 'tesseract'"
     )
@@ -485,7 +486,7 @@ def decode_from_detection_events(
     ]
 
     if obs_in_file is not None:
-        args.extend(["--obs_in", obs_in_file])
+        args.extend(["--obs-in", obs_in_file])
         if obs_in_format is not None:
             args.extend(["--obs-in-format", obs_in_format])
 
