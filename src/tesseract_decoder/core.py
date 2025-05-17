@@ -27,6 +27,7 @@ def _find_tesseract_executable() -> str:
     #    `resources.as_file` makes sure we get a real filesystem path,
     #    even when the package is installed from a zip wheel.
     # ──────────────────────────────────────────────────────────────
+    traversable = None
     try:
         traversable = resources.files("tesseract_decoder").joinpath("_bin", "tesseract")
         resource_display = str(traversable)
@@ -492,7 +493,7 @@ def decode_from_detection_events(
     ]
 
     if obs_in_file is not None:
-        args.extend(["--obs_in", obs_in_file])
+        args.extend(["--obs-in", obs_in_file])
         if obs_in_format is not None:
             args.extend(["--obs-in-format", obs_in_format])
 
