@@ -4,6 +4,8 @@ This package provides a Python wrapper for the [Tesseract Decoder, a search-base
 
 ## Installation
 
+Requires Python 3.10 or higher.
+
 You have two main options for installing the package.
 
 ### Option 1: Clone with Submodule and Build Locally
