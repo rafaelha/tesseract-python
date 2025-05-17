@@ -3,6 +3,7 @@ import shutil
 import subprocess
 import sys  # Added for real-time stdout
 from importlib import resources
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 
@@ -17,6 +18,10 @@ def _find_tesseract_executable() -> str:
     FileNotFoundError
         If the executable cannot be located.
     """
+    # default path used when the package resource cannot be located
+    traversable = Path(__file__).parent / "_bin" / "tesseract"
+    resource_display = str(traversable)
+
     # ──────────────────────────────────────────────────────────────
     # 1. packaged binary inside our wheel (src/tesseract_decoder/_bin/)
     #    `resources.as_file` makes sure we get a real filesystem path,
@@ -25,6 +30,7 @@ def _find_tesseract_executable() -> str:
     traversable = None
     try:
         traversable = resources.files("tesseract_decoder").joinpath("_bin", "tesseract")
+        resource_display = str(traversable)
         with resources.as_file(traversable) as bin_path:  # Py ≥3.9
             if os.name == "nt":  # Windows: .exe
                 exe = bin_path.with_suffix(".exe")
@@ -34,6 +40,7 @@ def _find_tesseract_executable() -> str:
                 return str(bin_path)
     except ModuleNotFoundError:
         # package isn't importable (very early import); ignore
+        resource_display = "N/A"
         pass
 
     # ──────────────────────────────────────────────────────────────
@@ -59,7 +66,7 @@ def _find_tesseract_executable() -> str:
     raise FileNotFoundError(
         "Tesseract executable not found.\n"
         f"Checked:\n"
-        f"  • packaged wheel resource: {traversable if traversable is not None else 'N/A'}\n"
+        f"  • packaged wheel resource: {resource_display}\n"
         f"  • legacy Bazel build dir : {legacy_path}\n"
         f"  • system PATH entry      : 'tesseract'"
     )
