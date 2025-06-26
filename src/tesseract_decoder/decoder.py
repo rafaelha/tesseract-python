@@ -1,6 +1,6 @@
 import os
 import tempfile
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Union
 
 import numpy as np
 import stim
@@ -17,14 +17,14 @@ class TesseractDecoder:
     def __init__(
         self,
         *,
-        circuit: stim.Circuit | None = None,
-        dem: stim.DetectorErrorModel | None = None,
-        beam: int | None = None,
+        circuit: Union[stim.Circuit, None] = None,
+        dem: Union[stim.DetectorErrorModel, None] = None,
+        beam: Union[int, None] = None,
         beam_climbing: bool = False,
-        pq_limit: int | None = None,
-        num_det_orders: int | None = None,
-        det_order_seed: int | None = None,
-        det_penalty: float | None = None,
+        pq_limit: Union[int, None] = None,
+        num_det_orders: Union[int, None] = None,
+        det_order_seed: Union[int, None] = None,
+        det_penalty: Union[float, None] = None,
         at_most_two_errors_per_detector: bool = False,
         no_revisit_dets: bool = False,
         no_merge_errors: bool = False,
@@ -69,9 +69,9 @@ class TesseractDecoder:
         ):
             raise ValueError("Exactly one of `circuit` or `dem` must be provided.")
 
-        self.circuit: stim.Circuit | None = circuit
+        self.circuit: Union[stim.Circuit, None] = circuit
         if circuit is None:
-            self.dem: stim.DetectorErrorModel | None = dem
+            self.dem: Union[stim.DetectorErrorModel, None] = dem
         else:
             self.dem = circuit.detector_error_model()
 
@@ -125,7 +125,7 @@ class TesseractDecoder:
     def _call_core_decoder(
         self,
         det_events_str: str,
-        threads: int | None = None,
+        threads: Union[int, None] = None,
         verbose_flag: bool = False,
         print_stats_flag: bool = False,
     ) -> Dict[str, Any]:
@@ -231,9 +231,9 @@ class TesseractDecoder:
 
     def decode(
         self,
-        det_events: np.ndarray | List[int | bool],
+        det_events: Union[np.ndarray, List[Union[int, bool]]],
         *,
-        threads: int | None = None,
+        threads: Union[int, None] = None,
         verbose: bool = False,
         print_stats: bool = False,
     ) -> np.ndarray:
@@ -308,9 +308,9 @@ class TesseractDecoder:
 
     def decode_batch(
         self,
-        det_events: np.ndarray | List[List[int | bool]],
+        det_events: Union[np.ndarray, List[List[Union[int, bool]]]],
         *,
-        threads: int | None = None,
+        threads: Union[int, None] = None,
         verbose: bool = False,
         print_stats: bool = False,
     ) -> np.ndarray:
@@ -394,8 +394,8 @@ class TesseractDecoder:
         self,
         shots: int,
         *,
-        sample_seed: int | None = None,
-        threads: int | None = None,
+        sample_seed: Union[int, None] = None,
+        threads: Union[int, None] = None,
         verbose: bool = False,
         print_stats: bool = False,
     ) -> np.ndarray:

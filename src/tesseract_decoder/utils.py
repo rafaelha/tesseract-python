@@ -1,9 +1,9 @@
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 import numpy as np
 
 
-def convert_array_to_01_format(array: List[List[bool | int]] | np.ndarray) -> str:
+def convert_array_to_01_format(array: Union[List[List[Union[bool, int]]], np.ndarray]) -> str:
     """
     Convert a 2D array to a "01" format string.
 
